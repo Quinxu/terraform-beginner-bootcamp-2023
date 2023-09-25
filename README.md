@@ -75,3 +75,24 @@ All future workspaces launched will have the set env var for all terminals opene
 You can also set env vars for unsensitive value in ./gitpod.yml.
 
 Set sensitive env var in .env file, and put the file in gitignore to keep the values locally.
+
+### AWS CLI Installation
+
+The bash script (./bin/install_aws_cli) is created to install AWS CLI for this project based on the [Install or update the latest version of the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+We can check if our AWS credentials is configured correctly by running the following AWS CLI command:
+```
+aws sts get-caller-identity
+```
+
+Set env vars based on [Env var to configure the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
+
+If the env var are set correctly according to AWS IAM Users' setting, the command should return the following json code:
+```json
+{
+    "UserId": "AIDAUAHNXGL7GECYBBCXX",
+    "Account": "278376000000",
+    "Arn": "arn:aws:iam::278376000000:user/terraform-beginner"
+}
+``` 
+
