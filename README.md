@@ -96,3 +96,59 @@ If the env var are set correctly according to AWS IAM Users' setting, the comman
 }
 ``` 
 
+## Terraform Basics
+For more information, please refer to [Terraform Registry](https://registry.terraform.io/)
+
+### Terraform
+It uses Infrastructure as Code to provision and manage any cloud, infrastructure, or service such as physical machines, VMs, network switches, containers, and more.
+
+### Terraform Registry
+It makes easy to use any provider or module. To use a provider or module from The Terraform Registry, just add it to your configuration; when you run `terraform init`, Terraform will automatically download everything it needs.
+
+### Terraform Providers
+They are the plugins that Terraform uses to manage those resources. Every supported service or infrastructure platform has a provider that defines which resources are available and performs API calls to manage those resources.
+
+### Terraform Modules
+They are reusable Terraform configurations that can be called and configured by other configurations. Most modules manage a few closely related resources from a single provider.
+
+### Terraform Main Commands
+  - init      
+    Prepare your working directory for other commands
+  - validate  
+    Check whether the configuration is valid
+  - plan      
+    Show changes required by the current configuration
+  - apply     
+    Create or update infrastructure.
+    - `terraform apply --auto-approve`
+  - destroy   
+    Destroy previously-created infrastructure
+
+To see more commands, run `terraform`
+
+### Terraform Lock Files
+ Currently, the Terraform only remembers the Terraform Provider dependency version chosen within the configuration lock file `.terraform.lock.hcl`
+
+ It is recommended that the lock file be included in version control repositories with the rest of the Terraform (.tf) files for the project.
+
+ When `terraform init` command is run, it will automatically create the Terraform Lock File if it doesn’t exist. If the file already exists, then Terraform will update it with the latest dependency versions selected.
+
+ If need to force the selected dependency versions to be updated, the -upgrade attribute flag can be added to the terraform init command, `terraform init -upgrade`
+
+
+
+### Terraform State Files
+`Terraform.tfstate` is a file that Terraform uses to track the state of the infrastructure it manages. The state file contains information about the resources that Terraform has created or is managing, such as the resource type, attributes, and relationships. Terraform uses the state file to determine which changes to make to your infrastructure when you run terraform apply.
+
+One should not edit the terraform.tfstate file directly, as this can cause Terraform to become confused about the state of your infrastructure. If you need to modify the state file, you can use the terraform state command.
+
+The `terraform.tfstate.backup` file is a backup of the terraform.tfstate file. Terraform automatically creates a backup of the state file before making any changes to the state file. This ensures that you can recover from a corrupted or lost state file.
+
+The terraform.tfstate.backup file is stored in the same directory as the terraform.tfstate file. It is overwritten every time Terraform makes changes to the state file.
+
+You can use the terraform.tfstate.backup file to restore your Terraform state to a previous version. To do this, simply rename the terraform.tfstate.backup file to terraform.tfstate and run terraform init.
+
+The both files shouldn't be committed to VCS.
+
+### Terraform Directory
+Terraform uses configuration content from `.terraform`, and also uses the directory to store settings, cached plugins and modules, and sometimes state data.
