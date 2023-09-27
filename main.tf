@@ -10,6 +10,13 @@ terraform {
       version = "5.17.0"
     }
   }
+  cloud {
+    organization = "qinxu"
+
+    workspaces {
+      name = "terra-house-1"
+    }
+  }
 }
 
 provider "random" {
