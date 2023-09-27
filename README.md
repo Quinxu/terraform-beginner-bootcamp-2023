@@ -166,3 +166,5 @@ Terraform uses configuration content from `.terraform`, and also uses the direct
     }
 }
 ```
+### Terraform Login Workaround in Gitpod
+Created the bash script [generate_tfrc_credentials](./bin/generate_tfrc_credentials) to use env var TERRAFORM_CLOUD_TOKEN to generate /home/gitpod/.terraform.d/credentials.tfrc.json
