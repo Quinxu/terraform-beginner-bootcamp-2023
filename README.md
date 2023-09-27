@@ -152,3 +152,17 @@ The both files shouldn't be committed to VCS.
 
 ### Terraform Directory
 Terraform uses configuration content from `.terraform`, and also uses the directory to store settings, cached plugins and modules, and sometimes state data.
+
+## Terraform Cloud
+- After signing in the registered account at [terraform.io](https://app.terraform.io/session), select to create the blank workspace of a organziation.
+- Create the new project - terraform-beginner-bootcamp-2023
+- When attempted to run `terraform login` from terminal, it didn't open browser properly to generate a token. The workaround is manually generate a token in [Terraform cloud](https://app.terraform.io/app/settings/tokens?source=terraform-login), copied the token string into /home/gitpod/.terraform.d/credentials.tfrc.json 
+```
+{
+    "credentials": {
+      "app.terraform.io": {
+        "token": "xxxxx"
+      }
+    }
+}
+```
