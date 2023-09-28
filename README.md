@@ -168,3 +168,7 @@ Terraform uses configuration content from `.terraform`, and also uses the direct
 ```
 ### Terraform Login Workaround in Gitpod
 Created the bash script [generate_tfrc_credentials](./bin/generate_tfrc_credentials) to use env var TERRAFORM_CLOUD_TOKEN to generate /home/gitpod/.terraform.d/credentials.tfrc.json
+
+## Run HTML Locally
+- To install http server, run `npm install http-server` in aws-cli terminal
+- To upload the file to S3 bucket, run `aws s3 cp public/index.html s3://qinxu/index.html`
