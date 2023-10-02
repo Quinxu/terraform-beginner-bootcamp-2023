@@ -1,5 +1,17 @@
 # Terraform Beginner Bootcamp 2023
 
+## Table of Content
+
+1. [Architecture Design]()
+2. [Week 0 Work]()
+3. [Week 1 Work]()
+
+- [Semantic Versioning](#semantic-versioning)
+- [Install the Terraform CLI](#install-the-terraform-cli)
+- [Terraform Basics](#terraform-basics)
+- [Terraform Cloud](#terraform-cloud)
+
+
 ## Semantic Versioning
 
 This project is going to utilize semantic versioning for its tagging. [semver.org](https://semver.org/)
