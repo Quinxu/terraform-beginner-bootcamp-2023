@@ -35,3 +35,6 @@ terraform.rc
 
 # Ignore Env Vars
 .env
+
+# Ignore the installed folder for http-server
+node_modules
