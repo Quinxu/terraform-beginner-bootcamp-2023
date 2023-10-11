@@ -8,5 +8,5 @@ else
   echo "alias tf=\"terraform\"" >> ~/.bash_profile
   echo "Alias 'tf' added to ~/.bash_profile."
   # Load the updated ~/.bash_profile without having to log out and back in
-  source ~/.bash_profile
 fi
+source ~/.bash_profile

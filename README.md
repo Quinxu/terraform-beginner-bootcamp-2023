@@ -218,4 +218,20 @@ Created the bash script [generate_tfrc_credentials](./bin/generate_tfrc_credenti
 - To install http server, run `npm install http-server` in aws-cli terminal
 - To upload the file to S3 bucket, run `aws s3 cp public/index.html s3://qinxu/index.html`
 
+#### Root Module Structure
+Based on [Standard Module Structure](https://developer.hashicorp.com/terraform/language/modules/develop/structure),
+our root module structure is as follows:
+```
+- Project_Root
+  |- main.tf             (everything else)
+  |- variables.tf        (stores the structure of input variables)
+  |- terraform.tfvars    (the data of variables we want to load into our Terraform project)
+  |- providers.tf        (defines required providers and their configurations)
+  |- outputs.tf          (stores our outputs)
+  |- README.md           (required for root modules)
+
+```
+
+
+
 </details>
