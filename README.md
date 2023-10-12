@@ -234,4 +234,16 @@ our root module structure is as follows:
 
 
 
+
+#### Dealing with Configuration Drift
+- What happens if we lose our state file?
+  - If statefile is missing, most likely all cloud infrastructure has to be torn down manually.
+  - Terraform import can be used, but it won't for all cloud resources. Need to check the terraform providers documentation for which resources support import.
+- Fix Missing Resources with Terraform Import
+  - [Terraform Input](https://developer.hashicorp.com/terraform/language/import)
+  - [AWS S3 Bucket Import](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import), ```terraform import aws_s3_bucket.bucket bucket-name```
+
+- Fix Manual Configuration
+  - If cloud resource is deleted or modified through manually clickOps, if we run ```terraform plan```, which attemps to put our infrastructure back into the expected state fixing configuration drift.
+
 </details>
