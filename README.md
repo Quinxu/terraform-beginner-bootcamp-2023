@@ -232,8 +232,39 @@ our root module structure is as follows:
 
 ```
 
+#### Terraform and Input Variables
 
+[Terraform Input Variables](https://developer.hashicorp.com/terraform/language/values/variables)
 
+##### Terraform Cloud Variables
+In terraform we can set two kind of variables:
+- Environment Variables
+  - Those you would set in your bash terminal, like AWS credentials
+- Terraform Variables
+  - Those you would normally set in your tfvars file
+
+  We can set Terraform Cloud varaibles to be sensitive so they are not shown visibly in the UI.
+
+##### Loading Terraform Variables
+- We can enter value at command prompted 
+- or use '-var' flag to set an input variable or override a variable in the tfvars file, eg. ```terraform plan -var user_uuid="my-user-id"``` 
+- or use '-var-file' flag to set the variables from the file, eg. ```terraform plan -var-file=variables.tfvars```
+
+- terraform.tvfars
+  - This is the default file to load in blunk
+
+- auto.tfvars
+  - In Terraform, auto.tfvars is a special filename used to automatically load variable values. When Terraform initializes a configuration, it looks for this file in the working directory and loads any variable values defined within it. The use of auto.tfvars can help streamline the process of specifying variable values for your Terraform configuration.
+
+    Here's how auto.tfvars works:
+
+    Terraform looks for a file named auto.tfvars in the same directory where your Terraform configuration files (typically with a .tf extension) are located.
+
+    Any variables defined in the auto.tfvars file are automatically loaded and assigned their values.
+
+    You don't need to specify the -var-file option or provide variable values interactively; Terraform will automatically load the values from auto.tfvars.
+
+    Variable values defined in auto.tfvars take precedence over the values defined in other variable files, like variables.tfvars or those provided through command-line flags. This means that if a variable is defined in both auto.tfvars and another variable file, the value from auto.tfvars will be used.
 
 #### Dealing with Configuration Drift
 - What happens if we lose our state file?
