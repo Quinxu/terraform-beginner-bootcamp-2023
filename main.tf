@@ -1,3 +1,27 @@
+terraform {
+  required_providers {
+    # random = {
+    #   source = "hashicorp/random"
+    #   version = "3.5.1"
+    # }
+    
+  }
+
+  # cloud {
+  #   organization = "qinxu"
+
+  #   workspaces {
+  #     name = "terra-house-1"
+  #   }
+  # }
+  
+}
+
+# provider "random" {
+#   # Configuration options
+# }
+
+
 
 #https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
 # resource "random_string" "bucket_name" {
@@ -7,13 +31,9 @@
 #   upper = false
 # }
 
-#https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
-resource "aws_s3_bucket" "terraform_bucket" {
-  #Bucket Naming Rules
-  #https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
-  bucket = var.bucket_name
+module "terrahouse_aws"{
+  source = "./modules/terrahouse_aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
 
-  tags = {
-    UserUuid = var.user_uuid
-  }
 }

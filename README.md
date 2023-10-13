@@ -277,4 +277,31 @@ In terraform we can set two kind of variables:
 - Fix Manual Configuration
   - If cloud resource is deleted or modified through manually clickOps, if we run ```terraform plan```, which attemps to put our infrastructure back into the expected state fixing configuration drift.
 
+- Fix Using Terraform Refresh
+  The terraform refresh command reads the current settings from all managed remote objects and updates the Terraform state to match.
+  ```
+  terraform apply -refresh-only
+  ```
+
+#### Terraform Modules
+- Terraform Module Structure
+  Modules are the main way to package and reuse resource configurations with Terraform.
+  - Root Module
+    Every Terraform configuration has at least one module, known as its root module, which consists of the resources defined in the .tf files in the main working directory.
+    - Child Module
+      A Terraform module (usually the root module of a configuration) can call other modules to include their resources into the configuration. A module that has been called by another module is often referred to as a child module.
+- Passing Input Variables
+  we pass inptu variables in our module, eg.
+  - ```
+  module "terrahouse_aws"{
+  source = "./modules/terrahouse_aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
+
+}
+  ```
+- Module Sources
+  [Module Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
+  Using the source we can import the module from various places.
+
 </details>
