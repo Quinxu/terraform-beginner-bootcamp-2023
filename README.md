@@ -304,4 +304,10 @@ In terraform we can set two kind of variables:
   [Module Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
   Using the source we can import the module from various places.
 
+#### Considerations when using ChatGPT to write Terraform
+
+LLMs such as ChatGPT may not be trained on the latest documentaton or information about Terraform.
+It may likely produce older examples that could be deprecated. Often affecting providers.
+
+
 </details>
