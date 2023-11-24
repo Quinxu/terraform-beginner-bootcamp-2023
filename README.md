@@ -315,7 +315,32 @@ It may likely produce older examples that could be deprecated. Often affecting p
   In terraform there is a special variable called 'path' that allows us to reference local paths:
   - path.module -> is the filesystem path of the module where the expression is placed.
   - path.root -> is the filesystem path of the root module of the configuration.
+
+
+  resource "aws_s3_object" "index_html" {
+  bucket = aws_s3_bucket.terraform_bucket.bucket
+  key    = "index.html"
+  source = "${path.root}/public/index.html"
+  etag = filemd5("${path.root}/public/index.html")
+}
+
+- Functions
+  - fileexists -> determines whether a file exists at a given path.
+      ```hcl
+        variable "error_html_file_path" {
+      type        = string
+      description = "Path to the error.html file"
+
+      validation {
+        condition     = fileexists(var.error_html_file_path)
+        error_message = "The specified error.html file does not exist."
+      }
+    }
   
+  - filemd5 -> a variant of md5 that hashes the contents of a given file rather than a literal string.
+    ```
+    etag = filemd5("${path.root}/public/index.html")
+    ```
 [Special path variable](https://developer.hashicorp.com/terraform/language/expressions/references)
 
 </details>
