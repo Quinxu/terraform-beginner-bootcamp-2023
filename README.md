@@ -309,5 +309,13 @@ In terraform we can set two kind of variables:
 LLMs such as ChatGPT may not be trained on the latest documentaton or information about Terraform.
 It may likely produce older examples that could be deprecated. Often affecting providers.
 
+#### Working with files in Terraform
+
+- Path Variable
+  In terraform there is a special variable called 'path' that allows us to reference local paths:
+  - path.module -> is the filesystem path of the module where the expression is placed.
+  - path.root -> is the filesystem path of the root module of the configuration.
+  
+[Special path variable](https://developer.hashicorp.com/terraform/language/expressions/references)
 
 </details>
