@@ -343,6 +343,30 @@ It may likely produce older examples that could be deprecated. Often affecting p
     ```
 [Special path variable](https://developer.hashicorp.com/terraform/language/expressions/references)
 
+#### Fixing Tags
+
+[How to Delete Local and Remote Tags on Git](https://devconnected.com/how-to-delete-local-and-remote-tags-on-git/)
+
+Locall delete a tag
+```sh
+git tag -d <tag_name>
+```
+
+Remotely delete tag
+
+```sh
+git push --delete origin tagname
+```
+
+Checkout the commit that you want to retag. Grab the sha from your Github history.
+
+```sh
+git checkout <SHA>
+git tag M.M.P
+git push --tags
+git checkout main
+```
+
 #### Terraform Data Sources
 [Data Soources](https://developer.hashicorp.com/terraform/language/data-sources)
 Data sources allow Terraform to use information defined outside of Terraform
