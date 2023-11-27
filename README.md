@@ -343,4 +343,29 @@ It may likely produce older examples that could be deprecated. Often affecting p
     ```
 [Special path variable](https://developer.hashicorp.com/terraform/language/expressions/references)
 
+#### Terraform Data Sources
+[Data Soources](https://developer.hashicorp.com/terraform/language/data-sources)
+Data sources allow Terraform to use information defined outside of Terraform
+```
+data "aws_caller_identity" "current" {
+  
+}
+```
+
+#### Terraform Locals
+[Local Values](https://developer.hashicorp.com/terraform/language/values/locals)
+A local value assigns a name to an expression, so you can use the name multiple times within a module instead of repeating the expression.
+Once a local value is declared, you can reference it in expressions as local.<NAME>.
+```
+locals {
+  s3_origin_id = "My-S3-Origin"
+}
+
+resource "aws_cloudfront_distribution" "s3_distribution" {
+  origin {
+    domain_name              = aws_s3_bucket.terraform_bucket.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    origin_id                = local.s3_origin_id
+  }
+```
 </details>
