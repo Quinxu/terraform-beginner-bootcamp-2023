@@ -392,4 +392,15 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id                = local.s3_origin_id
   }
 ```
+
+#### Working with JSON
+[jsonencode Function](https://developer.hashicorp.com/terraform/language/functions/jsonencode) encodes a given value to a string using JSON syntax.
+
+we use the jsonencode to create the json policy inline in the hcl.
+
+```tf
+> jsonencode({"hello"="world"})
+{"hello":"world"}
+
+```
 </details>

@@ -1,4 +1,4 @@
-bucket_name="terraform-qxu1"
+bucket_name="terraform-qxu"
 error_html_file_path="/workspace/terraform-beginner-bootcamp-2023/public/error.html"
 index_html_file_path="/workspace/terraform-beginner-bootcamp-2023/public/index.html"
 user_uuid="adbac9fa-4ceb-482e-8c50-2d5759137220"
