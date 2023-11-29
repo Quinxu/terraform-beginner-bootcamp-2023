@@ -403,4 +403,34 @@ we use the jsonencode to create the json policy inline in the hcl.
 {"hello":"world"}
 
 ```
+
+#### Changing the lifecycle of Resource
+[Meta Arguments Lifecycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
+
+
+#### The terraform_data Managed Resource Type
+[terraform_data](https://developer.hashicorp.com/terraform/language/resources/terraform-data)
+The terraform_data implements the standard resource lifecycle, but does not directly take any other actions. You can use the terraform_data resource without requiring or configuring a provider. It is always available through a built-in provider with the source address terraform.io/builtin/terraform.
+
+The terraform_data resource is useful for storing values which need to follow a manage resource lifecycle, and for triggering provisioners when there is no other logical managed resource in which to place them.
+
+```
+variable "revision" {
+  default = 1
+}
+
+resource "terraform_data" "replacement" {
+  input = var.revision
+}
+
+# This resource has no convenient attribute which forces replacement,
+# but can now be replaced by any change to the revision variable value.
+resource "example_database" "test" {
+  lifecycle {
+    replace_triggered_by = [terraform_data.replacement]
+  }
+}
+
+```
+
 </details>

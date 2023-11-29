@@ -31,6 +31,16 @@ resource "aws_s3_object" "index_html" {
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
   # etag = "${md5(file("path/to/file"))}"
   etag = filemd5(var.index_html_file_path)
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to index.html
+      etag
+    ]
+    replace_triggered_by = [
+      # replace index.html when content version changes
+      terraform_data.content_version
+    ]
+  }
 }
 
 resource "aws_s3_object" "error_html" {
@@ -65,4 +75,8 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
           }
       }
     })
+}
+
+resource "terraform_data" "content_version" {
+  input = var.content_version
 }

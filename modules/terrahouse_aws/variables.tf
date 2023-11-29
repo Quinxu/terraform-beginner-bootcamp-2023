@@ -43,3 +43,13 @@ variable "error_html_file_path" {
     error_message = "The specified error.html file does not exist."
   }
 }
+
+variable "content_version" {
+  type        = number
+  description = "The version number of the content"
+
+  validation {
+    condition     = var.content_version > 0
+    error_message = "Content version must be a positive integer"
+  }
+}
