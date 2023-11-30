@@ -414,7 +414,7 @@ The terraform_data implements the standard resource lifecycle, but does not dire
 
 The terraform_data resource is useful for storing values which need to follow a manage resource lifecycle, and for triggering provisioners when there is no other logical managed resource in which to place them.
 
-```
+```tf
 variable "revision" {
   default = 1
 }
@@ -432,5 +432,49 @@ resource "example_database" "test" {
 }
 
 ```
+#### Provisioners
+[Provisioners](https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax)
+
+Provisioners allow you to execute comands ton compute instances eg. a AWS CLI command.
+
+They are not recommended for use by Hashicorp because Configuraton Management tools such as Ansible are a better fit, but the functionality exists.
+
+- Local-exec
+  invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource. 
+  ```tf
+  resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    command = "echo ${self.private_ip} >> private_ips.txt"
+  }
+}
+
+  ```
+
+- Remote-exec
+  invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc.
+  ```tf
+  resource "aws_instance" "web" {
+  # ...
+
+  # Establishes connection to be used by all
+  # generic remote provisioners (i.e. file/remote-exec)
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = var.root_password
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.web.private_ip}",
+    ]
+  }
+}
+
+  ```
 
 </details>
