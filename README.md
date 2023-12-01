@@ -477,4 +477,20 @@ They are not recommended for use by Hashicorp because Configuraton Management to
 
   ```
 
+
+#### For Each Meta-Argument
+[For_each](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
+
+to manage several similar objects (like a fixed pool of compute instances) without writing a separate block for each one.
+
+If a resource or module block includes a for_each argument whose value is a map or a set of strings, Terraform creates one instance for each member of that map or set.
+
+```
+resource "aws_iam_user" "the-accounts" {
+  for_each = toset( ["Todd", "James", "Alice", "Dottie"] )
+  name     = each.key
+}
+
+```
+
 </details>
