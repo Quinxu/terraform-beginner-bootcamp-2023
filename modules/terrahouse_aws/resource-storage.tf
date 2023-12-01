@@ -80,3 +80,34 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
 resource "terraform_data" "content_version" {
   input = var.content_version
 }
+
+resource "aws_s3_object" "upload_assets" {
+  # bucket = aws_s3_bucket.example_bucket.bucket
+  # acl    = "private"
+  
+  #https://developer.hashicorp.com/terraform/language/functions/fileset
+  #https://developer.hashicorp.com/terraform/language/functions/toset
+
+  for_each = fileset("${var.assets_path}","*.{jpg,png,gif}")
+  bucket = aws_s3_bucket.terraform_bucket.bucket
+  key    = "assets/${each.key}"
+  source = "${path.root}${var.assets_path}${each.key}"
+  # key    = "index.html"
+  # source = var.index_html_file_path
+  #content_type = "text/html"
+
+  # The filemd5() function is available in Terraform 0.11.12 and later
+  # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
+  # etag = "${md5(file("path/to/file"))}"
+  etag = filemd5("${path.root}${var.assets_path}${each.key}")
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to index.html
+      etag
+    ]
+    replace_triggered_by = [
+      # replace index.html when content version changes
+      terraform_data.content_version
+    ]
+  }
+}

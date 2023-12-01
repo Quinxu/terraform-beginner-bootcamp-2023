@@ -18,3 +18,7 @@ variable "error_html_file_path" {
 variable "content_version" {
   type        = number
 }
+
+variable "assets_path" {
+  type        = string
+}
