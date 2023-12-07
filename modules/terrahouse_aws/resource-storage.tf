@@ -90,8 +90,8 @@ resource "aws_s3_object" "upload_assets" {
 
   for_each = fileset("${var.assets_path}","*.{jpg,png,gif}")
   bucket = aws_s3_bucket.terraform_bucket.bucket
-  key    = "${each.key}"
-  source = "${path.root}/${var.assets_path}/${each.key}"
+  key    = "assets/${each.key}"
+  source = "${var.assets_path}/${each.key}"
   # key    = "index.html"
   # source = var.index_html_file_path
   #content_type = "text/html"
@@ -99,7 +99,7 @@ resource "aws_s3_object" "upload_assets" {
   # The filemd5() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
   # etag = "${md5(file("path/to/file"))}"
-  etag = filemd5("${path.root}/${var.assets_path}/${each.key}")
+  etag = filemd5("${var.assets_path}/${each.key}")
   lifecycle {
     ignore_changes = [
       # Ignore changes to index.html
