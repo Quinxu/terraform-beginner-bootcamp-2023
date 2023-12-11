@@ -7,13 +7,13 @@ terraform {
     
   }
 
-  # cloud {
-  #   organization = "qinxu"
+  cloud {
+    organization = "qinxu"
 
-  #   workspaces {
-  #     name = "terra-house-1"
-  #   }
-  # }
+    workspaces {
+      name = "terraform-cloud"
+    }
+  }
   
 }
 
