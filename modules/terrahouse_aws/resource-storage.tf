@@ -6,7 +6,8 @@ resource "aws_s3_bucket" "terraform_bucket" {
 
   tags = {
     UserUuid = var.user_uuid
-    Hello = "world"
+    Hello = "Hello"
+    World = "World"
   }
 }
 
