@@ -3,12 +3,27 @@ require 'json'
 require 'pry'
 require 'active_model'
 
+# we will mock having a state or database for this development server
+# by setting a global variable. You would never use a global variable in production server.
+
 $home = {}
 
+# this is ruby class that includes validations from Activerecord.
+# this will represent our home resources as a ruby object.
 class Home
+  # ActiveModel is part of Ruby on Rails.
+  # it is used as an ORM. It has module within ActiveModelthat provides validations.
+  # The production Terratowns server is rails and uses very similar and in most cases identical validation
+  # https://guides.rubyonrails.org/active_model_basics.html
+
   include ActiveModel::Validations
+
+  # create some virtual attributes to store on this object
+  # This will set a getter and setter
+
   attr_accessor :town, :name, :description, :domain_name, :content_version
 
+  # https://guides.rubyonrails.org/active_model_basics.html#validations
   validates :town, presence: true
   validates :name, presence: true
   validates :description, presence: true
