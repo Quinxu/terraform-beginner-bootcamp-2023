@@ -24,15 +24,24 @@ class Home
   attr_accessor :town, :name, :description, :domain_name, :content_version
 
   # https://guides.rubyonrails.org/active_model_basics.html#validations
-  validates :town, presence: true
+  # https://guides.rubyonrails.org/active_record_validations.html#inclusion
+
+ 
+  validates :town, presence: true, inclusion: { in: ['melomaniac-mansion', 'cooker-cove', 'video-valley', 'the-nomad-pad', 'gamers-grotto']}
+   # visible to all users
   validates :name, presence: true
   validates :description, presence: true
+  
+  # we want to lock this down to only be from cloudfront
   validates :domain_name, 
     format: { with: /\.cloudfront\.net\z/, message: "domain must be from .cloudfront.net" }
     # uniqueness: true, 
-
+# content version has to be an integer
+# we will make sure it an incredemental version in the controller
   validates :content_version, numericality: { only_integer: true }
 end
+
+# we are extending a class from Sinatra::Base to turn this generic class to utilize the sinatra web framework
 
 class TerraTownsMockServer < Sinatra::Base
 
@@ -200,4 +209,5 @@ class TerraTownsMockServer < Sinatra::Base
   end
 end
 
+# This is what will run the server
 TerraTownsMockServer.run!
