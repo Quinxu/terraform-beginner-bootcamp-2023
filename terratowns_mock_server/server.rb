@@ -63,25 +63,31 @@ class TerraTownsMockServer < Sinatra::Base
     end
   end
 
+  # return a hardcoded access token
   def x_access_code
-    '9b49b3fb-b8e9-483c-b703-97ba88eef8e0'
+    return '9b49b3fb-b8e9-483c-b703-97ba88eef8e0'
   end
 
   def x_user_uuid
-    'e328f4ab-b99f-421c-84c9-4ccea042c7d1'
+    return 'e328f4ab-b99f-421c-84c9-4ccea042c7d1'
   end
 
   def find_user_by_bearer_token
+    # https://swagger.io/docs/specification/authentication/bearer-authentication/
     auth_header = request.env["HTTP_AUTHORIZATION"]
+    
+    # check if the Authorization header exists
     if auth_header.nil? || !auth_header.start_with?("Bearer ")
       error 401, "a1000 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
 
+    # check if the token matches with the one in our database, code is token or access_code
     code = auth_header.split("Bearer ")[1]
     if code != x_access_code
       error 401, "a1001 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
 
+    # was there a user_uuid in the message body payload json?
     if params['user_uuid'].nil?
       error 401, "a1002 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
     end
@@ -91,31 +97,36 @@ class TerraTownsMockServer < Sinatra::Base
     end
   end
 
+  #https://sematext.com/glossary/http-requests/#:~:text=An%20HTTP%20request%20is%20made%20out%20of%20three%20components,line%2C%20headers%20and%20message%20body. 
   # CREATE
   post '/api/u/:user_uuid/homes' do
-    ensure_correct_headings
-    find_user_by_bearer_token
+    ensure_correct_headings()
+    find_user_by_bearer_token()
     puts "# create - POST /api/homes"
 
+  # a begin/rescume is a try/catch
     begin
+      # Sinatra doesn't automatically part json bodies as params like rails, so we need to manually part it.
       payload = JSON.parse(request.body.read)
     rescue JSON::ParserError
       halt 422, "Malformed JSON"
     end
 
-    # Validate payload data
+    # assign payload data
     name = payload["name"]
     description = payload["description"]
     domain_name = payload["domain_name"]
     content_version = payload["content_version"]
     town = payload["town"]
 
+    # print them out to console for this endpoint
     puts "name #{name}"
     puts "description #{description}"
     puts "domain_name #{domain_name}"
     puts "content_version #{content_version}"
     puts "town #{town}"
 
+    # create new home model and set its attributes
     home = Home.new
     home.town = town
     home.name = name
@@ -123,12 +134,16 @@ class TerraTownsMockServer < Sinatra::Base
     home.domain_name = domain_name
     home.content_version = content_version
     
+    # Run our validation checks
     unless home.valid?
+      # return errors message back to json
       error 422, home.errors.messages.to_json
     end
 
+    # generating a uuid randomly
     uuid = SecureRandom.uuid
     puts "uuid #{uuid}"
+    # mock our data to our mock data base which just a global variable
     $home = {
       uuid: uuid,
       name: name,
@@ -138,6 +153,7 @@ class TerraTownsMockServer < Sinatra::Base
       content_version: content_version
     }
 
+    # return uuid
     return { uuid: uuid }.to_json
   end
 
@@ -150,6 +166,7 @@ class TerraTownsMockServer < Sinatra::Base
     # checks for house limit
 
     content_type :json
+    # check uuid for the home match the one in our database
     if params[:uuid] == $home[:uuid]
       return $home.to_json
     else
@@ -203,7 +220,7 @@ class TerraTownsMockServer < Sinatra::Base
     if params[:uuid] != $home[:uuid]
       error 404, "failed to find home with provided uuid and bearer token"
     end
-
+    # delete from mock database
     $home = {}
     { message: "House deleted successfully" }.to_json
   end
