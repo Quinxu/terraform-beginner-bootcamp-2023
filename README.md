@@ -546,6 +546,7 @@ gem 'activerecord'
 ```
 go run main.go
 ```
+- [Information on creating custom terraform providers](https://www.hashicorp.com/blog/writing-custom-terraform-providers)
 
 
 
