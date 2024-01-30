@@ -1,13 +1,14 @@
+//main package is special in Go, it is where the execution of program starts.
 package main
 
 import (
-	"fmt"
+	"fmt" //the package contains formatted I/O functions
 	"log"
 	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
 )
-
+//defines the main function, the entry point of the application
 func main() {
 
 	plugin.Serve(&plugin.ServeOpts{
