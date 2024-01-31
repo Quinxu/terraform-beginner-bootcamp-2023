@@ -2,9 +2,9 @@
 package main
 
 import (
-	"fmt" //the package contains formatted I/O functions
-	"log"
-	"github.com/google/uuid"
+	//"fmt" //the package contains formatted I/O functions
+	//"log"
+	//"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
 )
@@ -34,7 +34,7 @@ func provider() *schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
 
 		},
-		schema: map[string]*schema.Schema{
+		Schema: map[string]*schema.Schema{
 			"endpoint":{
 				Type: schema.TypeString,
 				Required: true,
@@ -55,7 +55,7 @@ func provider() *schema.Provider{
 		},
 
 	}
-	p.ConfigureContextFunc = providerConfigure(p)
+	//p.ConfigureContextFunc = providerConfigure(p)
 	return p
 }
 
@@ -75,7 +75,7 @@ func resourceCustom() *schema.Resource {
 		},
 	}
 }
-
+/*
 func validateUUID(v interface{}, k string) (ws []string, errors []error) {
 	log.print("validateUUID:start")
 	value := v.(string)
@@ -101,3 +101,4 @@ func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
 		return &config, nil
 	}
 }
+*/
