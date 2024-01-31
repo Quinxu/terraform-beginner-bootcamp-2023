@@ -41,3 +41,6 @@ node_modules
 
 terraform.tfvars
 
+# Ignore the built output file
+terraform-provider-terratowns/terraform-provider-terratowns_v*
+
