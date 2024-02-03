@@ -548,6 +548,18 @@ go run main.go
 ```
 - [Information on creating custom terraform providers](https://www.hashicorp.com/blog/writing-custom-terraform-providers)
 
+- Build the plugin using the Go
+  ```
+  go build -o terraform-provider-name  
+  ```
+- To run in debug mode
+  ```
+  TF_LOG=DEBUG tf init
+  ```
+  
+
+  
+
 
 
 
