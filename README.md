@@ -552,11 +552,13 @@ go run main.go
   ```
   go build -o terraform-provider-name  
   ```
+  In this project, there is build_provider script in bin/terratwons.
+
 - To run in debug mode
   ```
   TF_LOG=DEBUG tf init
   ```
-  
+  It is set in .gitpod.yml for terraform.
 
   
 
