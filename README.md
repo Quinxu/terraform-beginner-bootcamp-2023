@@ -548,6 +548,7 @@ go run main.go
 ```
 - [Information on creating custom terraform providers](https://www.hashicorp.com/blog/writing-custom-terraform-providers)
 
+
 - Build the plugin using the Go
   ```
   go build -o terraform-provider-name  
@@ -559,8 +560,6 @@ go run main.go
   TF_LOG=DEBUG tf init
   ```
   It is set in .gitpod.yml for terraform.
-
-  
 
 
 
