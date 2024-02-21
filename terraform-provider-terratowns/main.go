@@ -1,13 +1,26 @@
-//main package is special in Go, it is where the execution of program starts.
+// main package is special in Go, it is where the execution of program starts.
 package main
 
 import (
-	//"fmt" //the package contains formatted I/O functions
-	//"log"
-	//"github.com/google/uuid"
+	"context"
+	"fmt" //the package contains formatted I/O functions
+	"log"
+
+	"github.com/google/uuid"
+
+	//"github.com/hashicorp/go-uuid"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
 )
+
+type Config struct {
+
+	Endpoint string
+	Token string
+	UserUuid string
+}
+
 //defines the main function, the entry point of the application
 func main() {
 
@@ -29,7 +42,7 @@ func provider() *schema.Provider{
 	var p *schema.Provider
 	p = &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
-		
+			"terratowns_home": Resource(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 
@@ -50,7 +63,7 @@ func provider() *schema.Provider{
 				Type: schema.TypeString,
 				Required: true,
 				Description: "UUID for configuration",
-				// ValidateFunc: validateUUID
+				ValidateFunc: validateUUID,
 			},
 		},
 
@@ -75,24 +88,24 @@ func resourceCustom() *schema.Resource {
 		},
 	}
 }
-/*
+
 func validateUUID(v interface{}, k string) (ws []string, errors []error) {
-	log.print("validateUUID:start")
+	log.Print("validateUUID:start")
 	value := v.(string)
 
-	_, err := uuid.Parse(value)
+	_, err := uuid.Parse(value)//ParseUUID(value)//.Parse(value)
 	if err != nil {
 		errors = append(errors, fmt.Errorf("%s isn't a valid UUID: %s", k, err))
 	}
 
-	log.print("validateUUID:end")
+	log.Print("validateUUID:end")
 	return
 }
 
 func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
-	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics ) {
+	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 		log.Print("providerConfigure:start")
-		config := Config{
+		config :=  Config{
 			Endpoint: d.Get("endpoint").(string),
 			Token: d.Get("token").(string),
 			UserUuid: d.Get("user_uuid").(string),
@@ -101,4 +114,35 @@ func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
 		return &config, nil
 	}
 }
-*/
+
+func Resource() *schema.Resource {
+	log.Print("Resource:start")
+	resource:= &schema.Resource{
+		CreateContext: resourceHouseCreate,
+		ReadContext: resourceHouseRead,
+		UpdateContext: resourceHouseUpdate,
+		DeleteContext: resourceHouseDelete,
+	}
+	log.Print("Resource:end")
+	return resource
+}
+
+func resourceHouseCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
+
+func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
+
+func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
+
+func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
