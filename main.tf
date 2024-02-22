@@ -52,3 +52,15 @@ provider "terratowns" {
 #   content_version = var.content_version
 #   assets_path = var.assets_path
 # }
+
+resource "terratown_home" "home" {
+  name = "Yellow Stone"
+  description = <<DESCRIPTION
+    This is a town located in the west coast.
+    With population about 10,000.
+  DESCRIPTION
+  # domain_name = module.terrahouse_aws.cloudfront_url
+  domain_name = "3fdq3gz.cloudfront.net"
+  town = "Gold miners"
+  content_version = 1
+}

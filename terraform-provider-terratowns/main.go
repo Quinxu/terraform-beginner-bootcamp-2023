@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt" //the package contains formatted I/O functions
 	"log"
+	"net/http"
 
 	"github.com/google/uuid"
 
@@ -68,7 +69,7 @@ func provider() *schema.Provider{
 		},
 
 	}
-	//p.ConfigureContextFunc = providerConfigure(p)
+	p.ConfigureContextFunc = providerConfigure(p)
 	return p
 }
 
@@ -155,21 +156,54 @@ func Resource() *schema.Resource {
 }
 
 func resourceHouseCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Print("resourceHouseCreate:start")
 	var diags diag.Diagnostics
+	config := m.(*Config)
+
+	//construct the http request
+	req, err := http.NewRequest("POST", config.Endpoint+"/u/"+config.UserUuid+"/homes", REPLACE_ME)
+	if err != ni {
+		return diag.FromErr(error)
+	}
+	//set headers
+	req.Header.Set("Authorization","Bearer "+config.Token)
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set("Accept","application/json")
+
+	log.Print("resourceHouseCreate:end")
 	return diags
 }
 
 func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Print("resourceHouseRead:start")
 	var diags diag.Diagnostics
+	config := m.(*Config)
+	log.Print("resourceHouseRead:end")
 	return diags
 }
 
 func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Print("resourceHouseUpdate:start")
 	var diags diag.Diagnostics
+	config := m.(*Config)
+	//construct the http request
+	req, err := http.NewRequest("POST", config.Endpoint+"/u/"+config.UserUuid+"/homes", REPLACE_ME)
+	if err != ni {
+		return diag.FromErr(error)
+	}
+	//set headers
+	req.Header.Set("Authorization","Bearer "+config.Token)
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set("Accept","application/json")
+
+	log.Print("resourceHouseUpdate:end")
 	return diags
 }
 
 func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Print("resourceHouseDelete:start")
 	var diags diag.Diagnostics
+	config := m.(*Config)
+	log.Print("resourceHouseDelete:end")
 	return diags
 }
