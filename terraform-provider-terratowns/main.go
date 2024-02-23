@@ -2,7 +2,9 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt" //the package contains formatted I/O functions
 	"log"
 	"net/http"
@@ -160,17 +162,58 @@ func resourceHouseCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	var diags diag.Diagnostics
 	config := m.(*Config)
 
+	payload := map[string]interface{}{
+		"name": d.Get("name").(string),
+		"description": d.Get("description").(string),
+		"domain_name": d.Get("domain_name").(string),
+		"town": d.Get("town").(string),
+		"content_version": d.Get("content_version").(int),
+	}
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	//construct the http request
-	req, err := http.NewRequest("POST", config.Endpoint+"/u/"+config.UserUuid+"/homes", REPLACE_ME)
-	if err != ni {
-		return diag.FromErr(error)
+	url :=  config.Endpoint+"/u/"+config.UserUuid+"/homes"
+	log.Print("URL: "+ url)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return diag.FromErr(err)
 	}
 	//set headers
 	req.Header.Set("Authorization","Bearer "+config.Token)
 	req.Header.Set("Content-Type","application/json")
 	req.Header.Set("Accept","application/json")
 
+	//make http request
+	client := http.Client{}
+	resp, err := client.Do(req)
+	
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	defer resp.Body.Close()
+
+	//parse response JSON
+	var respData map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
+		return diag.FromErr(err)
+	}
+
+	//http resp code 200
+	if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to create home resource, status_code:%d, status:%s, body: %s",resp.StatusCode, resp.Status,respData))
+	}
+	//handle resp status
+
+	
+	homeUUID := respData["uuid"].(string)
+	d.SetId(homeUUID)
+
 	log.Print("resourceHouseCreate:end")
+
 	return diags
 }
 
@@ -178,6 +221,50 @@ func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{
 	log.Print("resourceHouseRead:start")
 	var diags diag.Diagnostics
 	config := m.(*Config)
+	homeUUID := d.Id()
+
+	//construct the http request
+	url := config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID
+	log.Print("URL: "+ url)
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	//set headers
+	req.Header.Set("Authorization","Bearer "+config.Token)
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set("Accept","application/json")
+
+	//make http request
+	client := http.Client{}
+	resp, err := client.Do(req)
+	
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	defer resp.Body.Close()
+
+	var respData map[string]interface{}
+	//http resp code 200
+	if resp.StatusCode != http.StatusOK {
+		//parse resp JSON
+		
+		if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
+			return diag.FromErr(err)
+		}
+		d.Set("name",respData["name"].(string))
+		d.Set("description", respData["description"].(string))
+		d.Set("domain_name", respData["domain_name"].(string))
+		//d.Set("town",respData["town"].(string))
+		d.Set("content_version", respData["content_version"].(int))
+		
+	}else if resp.StatusCode != http.StatusNotFound {
+		d.SetId("")
+	}else if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to read home resource, status_code:%d, status:%s, body: %s",resp.StatusCode, resp.Status,respData))
+	}
+
 	log.Print("resourceHouseRead:end")
 	return diags
 }
@@ -186,15 +273,48 @@ func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 	log.Print("resourceHouseUpdate:start")
 	var diags diag.Diagnostics
 	config := m.(*Config)
+	homeUUID := d.Id()
+
+	payload := map[string]interface{}{
+		"name": d.Get("name").(string),
+		"description": d.Get("description").(string),
+		"content_version": d.Get("content_version").(int),
+	}
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	//construct the http request
-	req, err := http.NewRequest("POST", config.Endpoint+"/u/"+config.UserUuid+"/homes", REPLACE_ME)
-	if err != ni {
-		return diag.FromErr(error)
+	url := config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID
+	log.Print("URL: "+ url)
+	req, err := http.NewRequest("PUT", url, bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return diag.FromErr(err)
 	}
 	//set headers
 	req.Header.Set("Authorization","Bearer "+config.Token)
 	req.Header.Set("Content-Type","application/json")
 	req.Header.Set("Accept","application/json")
+
+	//make http request
+	client := http.Client{}
+	resp, err := client.Do(req)
+	
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	defer resp.Body.Close()
+
+	//http resp code 200
+	if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to update home resource, status_code:%d, status:%s",resp.StatusCode, resp.Status))
+	}
+
+	d.Set("name", payload["name"])
+	d.Set("description", payload["description"])
+	d.Set("content_version",payload["content_version"])
 
 	log.Print("resourceHouseUpdate:end")
 	return diags
@@ -204,6 +324,36 @@ func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interfac
 	log.Print("resourceHouseDelete:start")
 	var diags diag.Diagnostics
 	config := m.(*Config)
+	homeUUID := d.Id()
+
+	//construct the http request
+	url :=  config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID
+	log.Print("URL: "+ url)
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	//set headers
+	req.Header.Set("Authorization","Bearer "+config.Token)
+	req.Header.Set("Content-Type","application/json")
+	req.Header.Set("Accept","application/json")
+
+	//make http request
+	client := http.Client{}
+	resp, err := client.Do(req)
+	
+	if err != nil {
+		return diag.FromErr(err)
+	}
+	defer resp.Body.Close()
+
+	//http resp code 200
+	if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to delete home resource, status_code:%d, status:%s",resp.StatusCode, resp.Status))
+	}
+
+	d.SetId("")
 	log.Print("resourceHouseDelete:end")
 	return diags
 }
