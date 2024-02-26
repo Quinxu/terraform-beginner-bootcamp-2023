@@ -565,6 +565,20 @@ go run main.go
     Terraform provider resource utilize CRUD.
     CRUD stands for Create, Read, Update and Delete.
 
+- The order to run
+  - Run ./bin/terratowns/build_provider
+  - tf init
+  - tf apply
+  - tf destroy
+
+- In Terraform, TF_VAR_ is a prefix convention used to set environment variables for input variables in Terraform configurations. These variables allow you to parameterize your configurations and pass values into them without having to hardcode values directly into your configuration files.
+```
+export TF_VAR_example_var="some_value"
+
+```
+  - check to see if the env variable is set correctly
+    - gp env 
+
 
 
 
