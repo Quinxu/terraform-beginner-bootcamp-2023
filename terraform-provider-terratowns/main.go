@@ -256,7 +256,7 @@ func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{
 		d.Set("name",respData["name"].(string))
 		d.Set("description", respData["description"].(string))
 		d.Set("domain_name", respData["domain_name"].(string))
-		//d.Set("town",respData["town"].(string))
+		d.Set("town",respData["town"].(string))
 		d.Set("content_version", respData["content_version"].(int))
 		
 	}else if resp.StatusCode != http.StatusNotFound {

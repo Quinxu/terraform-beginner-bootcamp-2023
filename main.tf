@@ -54,13 +54,16 @@ provider "terratowns" {
 # }
 
 resource "terratowns_home" "home" {
-  name = "Welcome to Yellow Stone"
+  name = "How to play Arcanum in 2023!"
   description = <<DESCRIPTION
-    This is a town located in the west coast.
-    With population about 10,000.
-  DESCRIPTION
+Arcanum is a game from 2001 that shipped with alot of bugs.
+Modders have removed all the originals making this game really fun
+to play (despite that old look graphics). This is my guide that will
+show you how to play arcanum without spoiling the plot.
+DESCRIPTION
+  # description = "This is a town located in the west coast. \\nWith population about 10,000."
   # domain_name = module.terrahouse_aws.cloudfront_url
   domain_name = "3fdq3gz.cloudfront.net"
-  town = "Home to all gold miners"
+  town = "gamers-grotto"
   content_version = 1
 }
