@@ -2,7 +2,7 @@
 resource "aws_s3_bucket" "terraform_bucket" {
   #Bucket Naming Rules
   #https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
-  bucket = var.bucket_name
+  # bucket = var.bucket_name #want to assign a random bucket name
 
   tags = {
     UserUuid = var.user_uuid
