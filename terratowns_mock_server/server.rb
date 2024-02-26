@@ -123,15 +123,16 @@ class TerraTownsMockServer < Sinatra::Base
     puts "name #{name}"
     puts "description #{description}"
     puts "domain_name #{domain_name}"
-    puts "content_version #{content_version}"
+    # puts "content_version #{content_version}"
     puts "town #{town}"
+    puts "content_version #{content_version}"
 
     # create new home model and set its attributes
     home = Home.new
-    home.town = town
     home.name = name
     home.description = description
     home.domain_name = domain_name
+    home.town = town
     home.content_version = content_version
     
     # Run our validation checks
