@@ -16,18 +16,30 @@ variable "teacherseat_user_uuid" {
 #   type        = string
 # }
 
-variable "index_html_file_path" {
-  type        = string
+# variable "index_html_file_path" {
+#   type        = string
+# }
+
+# variable "error_html_file_path" {
+#   type        = string
+# }
+
+variable "carving" {
+  type =  object({
+    public_path = string
+    content_version = number
+  })
 }
 
-variable "error_html_file_path" {
-  type        = string
-}
+# variable "carving_content_version" {
+#   type        = number
+# }
 
-variable "content_version" {
-  type        = number
-}
+# variable "assets_path" {
+#   type        = string
+# }
 
-variable "assets_path" {
-  type        = string
-}
+# variable "carving_public_path" {
+#   description = "Path to the public folder"
+#   type        = string
+# }
