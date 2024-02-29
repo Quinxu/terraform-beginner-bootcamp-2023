@@ -247,7 +247,7 @@ func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	var respData map[string]interface{}
 	//http resp code 200
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode == http.StatusOK {
 		//parse resp JSON
 		
 		if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
@@ -259,7 +259,7 @@ func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{
 		d.Set("town",respData["town"].(string))
 		d.Set("content_version", respData["content_version"].(int))
 		
-	}else if resp.StatusCode != http.StatusNotFound {
+	}else if resp.StatusCode == http.StatusNotFound {
 		d.SetId("")
 	}else if resp.StatusCode != http.StatusOK {
 		return diag.FromErr(fmt.Errorf("failed to read home resource, status_code:%d, status:%s, body: %s",resp.StatusCode, resp.Status,respData))

@@ -11,23 +11,18 @@ variable "teacherseat_user_uuid" {
   type    = string
 }
 
-# variable "bucket_name" {
-# #   description = "The name of the S3 bucket"
-#   type        = string
-# }
-
-variable "index_html_file_path" {
-  type        = string
+variable "carving" {
+  type =  object({
+    public_path = string
+    content_version = number
+  })
 }
 
-variable "error_html_file_path" {
-  type        = string
+variable "roasting" {
+  type =  object({
+    public_path = string
+    content_version = number
+  })
 }
 
-variable "content_version" {
-  type        = number
-}
 
-variable "assets_path" {
-  type        = string
-}

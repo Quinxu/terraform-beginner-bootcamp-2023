@@ -24,37 +24,38 @@
 #   }
 # }
 
-variable "index_html_file_path" {
-  type        = string
-  description = "Path to the index.html file"
+# variable "index_html_file_path" {
+#   type        = string
+#   description = "Path to the index.html file"
 
-  validation {
-    condition     = fileexists(var.index_html_file_path)
-    error_message = "The specified index.html file does not exist."
-  }
-}
+#   validation {
+#     condition     = fileexists(var.index_html_file_path)
+#     error_message = "The specified index.html file does not exist."
+#   }
+# }
 
-variable "error_html_file_path" {
-  type        = string
-  description = "Path to the error.html file"
+# variable "error_html_file_path" {
+#   type        = string
+#   description = "Path to the error.html file"
 
-  validation {
-    condition     = fileexists(var.error_html_file_path)
-    error_message = "The specified error.html file does not exist."
-  }
-}
+#   validation {
+#     condition     = fileexists(var.error_html_file_path)
+#     error_message = "The specified error.html file does not exist."
+#   }
+# }
 
 variable "content_version" {
   type        = number
-  description = "The version number of the content"
+  description = "The version number of the content. Should be a positive integer starting at 1."
 
   validation {
-    condition     = var.content_version > 0
-    error_message = "Content version must be a positive integer"
+    condition     = var.content_version > 0 && floor(var.content_version) == var.content_version
+    error_message = "Content version must be a positive integer starting at 1."
   }
 }
 
-variable "assets_path" {
-  description = "Path to the assets folder"
+variable "public_path" {
+  description = "Path to the public folder"
   type        = string
 }
+

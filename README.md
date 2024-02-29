@@ -574,6 +574,7 @@ go run main.go
 - In Terraform, TF_VAR_ is a prefix convention used to set environment variables for input variables in Terraform configurations. These variables allow you to parameterize your configurations and pass values into them without having to hardcode values directly into your configuration files.
 ```
 export TF_VAR_example_var="some_value"
+gp env TF_VAR_example_var="some_value"
 
 ```
   - check to see if the env variable is set correctly
@@ -581,7 +582,26 @@ export TF_VAR_example_var="some_value"
 
 
 
+#### Terrahome AWS
 
+```
+module "home_carving"{
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  # bucket_name = var.bucket_name
+  public_path = var.carving_public_path
+  # index_html_file_path = var.index_html_file_path
+  # error_html_file_path = var.error_html_file_path
+  content_version = var.content_version
+#   assets_path = var.assets_path
+}
+```
+The public directory expects the following:
+- index.html
+- error.html
+- assets
+
+All top level files in assets will be copied, but not any subdirectories.
 
 
 
