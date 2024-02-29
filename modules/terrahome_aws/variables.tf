@@ -44,22 +44,18 @@
 #   }
 # }
 
-variable "carving_content_version" {
+variable "content_version" {
   type        = number
-  description = "The version number of the content"
+  description = "The version number of the content. Should be a positive integer starting at 1."
 
   validation {
-    condition     = var.carving_content_version > 0
-    error_message = "Content version must be a positive integer"
+    condition     = var.content_version > 0 && floor(var.content_version) == var.content_version
+    error_message = "Content version must be a positive integer starting at 1."
   }
 }
 
-# variable "assets_path" {
-#   description = "Path to the assets folder"
-#   type        = string
-# }
-
-variable "carving_public_path" {
+variable "public_path" {
   description = "Path to the public folder"
   type        = string
 }
+

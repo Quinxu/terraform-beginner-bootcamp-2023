@@ -1,6 +1,9 @@
-carving ={
+carving = {
     public_path="/workspace/terraform-beginner-bootcamp-2023/public/carving/"
     content_version=1
 }
-
+roasting = {
+    public_path="/workspace/terraform-beginner-bootcamp-2023/public/roasting/"
+    content_version=1
+}
 terratowns_endpoint="https://terratowns.cloud/api"

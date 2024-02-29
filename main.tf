@@ -38,9 +38,7 @@ terraform {
 provider "terratowns" {
   # endpoint = "http://localhost:4567/api"
   endpoint = var.terratowns_endpoint
-  # user_uuid = "e328f4ab-b99f-421c-84c9-4ccea042c7d1"
   user_uuid = var.teacherseat_user_uuid
-  # token = "9b49b3fb-b8e9-483c-b703-97ba88eef8e0"
   token = var.terratowns_access_token
 
   
@@ -49,8 +47,8 @@ provider "terratowns" {
 module "home_carving_hosting"{
   source = "./modules/terrahome_aws"
   user_uuid = var.teacherseat_user_uuid
-  carving_public_path = var.carving.public_path
-  carving_content_version = var.carving.content_version
+  public_path = var.carving.public_path
+  content_version = var.carving.content_version
 }
 
 resource "terratowns_home" "home_carving" {
@@ -63,29 +61,25 @@ DESCRIPTION
   # domain_name = "3fdq3gzxq1.cloudfront.net"
   # town = "gamers-grotto"
   town = "missingo"
-  content_version = 1
+  content_version = var.carving.content_version
 }
 
-# module "home_roasting_hosting"{
-#   source = "./modules/terrahome_aws"
-#   user_uuid = var.teacherseat_user_uuid
-#   # bucket_name = var.bucket_name
-#   public_path = var.public_path
-#   # index_html_file_path = var.index_html_file_path
-#   # error_html_file_path = var.error_html_file_path
-#   content_version = var.content_version
-#   # assets_path = var.assets_path
-# }
+module "home_roasting_hosting"{
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  public_path = var.roasting.public_path
+  content_version = var.roasting.content_version
+}
 
-# resource "terratowns_home" "home_roasting" {
-#   name = "How to roast a duck in 2024!"
-#   description = <<DESCRIPTION
-# It shows the detailed steps to roast a duck.
-# DESCRIPTION
-#   # description = "This is a town located in the west coast. \\nWith population about 10,000."
-#   domain_name = module.home_roasting_hosting.domain_name
-#   # domain_name = "3fdq3gzxq1.cloudfront.net"
-#   # town = "gamers-grotto"
-#   town = "missingo"
-#   content_version = 1
-# }
+resource "terratowns_home" "home_roasting" {
+  name = "How to roast a duck in 2024!"
+  description = <<DESCRIPTION
+It shows the detailed steps to roast a duck.
+DESCRIPTION
+  # description = "This is a town located in the west coast. \\nWith population about 10,000."
+  domain_name = module.home_roasting_hosting.domain_name
+  # domain_name = "3fdq3gzxq1.cloudfront.net"
+  # town = "gamers-grotto"
+  town = "missingo"
+  content_version = var.roasting.content_version
+}
