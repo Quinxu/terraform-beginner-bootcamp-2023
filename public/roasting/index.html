@@ -10,11 +10,38 @@
             max-width: 100%;
             height: auto;
         }
+        /* Style the TOC container */
+        .toc {
+            position: fixed;
+            left: 0;
+            top: 50%;/*6em; /* Adjust as needed */
+            transform: translateY(-50%);
+            /*width: 200px; /* Set the desired width */
+            /*height: 100%; Full height of the viewport */
+            background-color: #f0f0f0; /* Choose your background color */
+            overflow-y: auto; /* Enable scrolling if needed */
+            padding: 10px;
+            border-right: 1px solid #ccc;
+        }
+
+        /* Style TOC links */
+        .toc a {
+            display: block;
+            padding: 0.5em;
+            text-decoration: none;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <div id="container">
-        <div id="toc">
+    <header>
+        <h1>How to Roast a Duck</h1>
+        <p>This is the description of the steps to roast a duck.</p>
+    </header>
+
+    
+    <!-- <div id="container"> -->
+        <div class="toc">
             <h2>Table of Contents</h2>
             <ul>
                 <li><a href="#step1">Step 1</a></li>
@@ -25,11 +52,10 @@
                 <li><a href="#step6">Step 6</a></li>
             </ul>
         </div>
-        <div id="content">
-            <h1>How to Roast a Duck</h1>
-            <p>This is the description of the steps to roast a duck.</p>
-
-            <h2 id="step1">Gather Your Ingredients</h2>
+        <main>
+        <!-- <div id="content"> -->
+       <section id="step1">
+            <h2 >Gather Your Ingredients</h2>
             <p><ul>
                     <li>2 teaspoons paprika</li><img src="/assets/paprika.png" width="100px" height="100px">
                     <li>2 teaspoons salt</li>
@@ -38,30 +64,40 @@
                     <li>½ cup butter, melted, divided</li>
                 </ul>
             </p>
-
-            <img src="step1_image.jpg" alt="Step 1 Image">
-
-            <h2 id="step2">Preheat Oven</h2>
+        </section>
+            <!-- <img src="step1_image.jpg" alt="Step 1 Image"> -->
+        <section id="step2">
+            <h2 >Preheat Oven</h2>
             <p>Preheat the oven to 375 degrees F (190 degrees C).</p>
-            <img src="step2_image.jpg" alt="Step 2 Image">
+            <img src="step2_image.jpg" alt="Step 2 Image" width="100px" height="100px">
+        </section>
 
-            <h2 id="step3">Seasoning</h2>
+        <section id="step3"> 
+            <h2 >Seasoning</h2>
             <p>Combine paprika, salt, and pepper in a small bowl; rub spice mixture onto skin of duck. Place duck in a roasting pan.</p>
-            <img src="step3_image.jpg" alt="Step 3 Image">
+            <img src="step3_image.jpg" alt="Step 3 Image" width="100px" height="100px">
+        </section>
 
-            <h2 id="step4">Apply Melted Butter</h2>
+        <section id="step4"> 
+            <h2 >Apply Melted Butter</h2>
             <p>Spoon 1/4 cup melted butter over duck and continue cooking for 45 minutes more.</p>
-            <img src="step4_image.jpg" alt="Step 4 Image">
-
-            <h2 id="step5">Apply Rest of Butter</h2>
+            <img src="step4_image.jpg" alt="Step 4 Image" width="100px" height="100px">
+        </section>
+        
+        <section id="step5"> 
+            <h2 >Apply Rest of Butter</h2>
             <p>Spoon remaining 1/4 cup melted butter over duck and cook until golden brown, about 15 minutes more.</p>
-            <img src="step5_image.jpg" alt="Step 5 Image">
+            <img src="step5_image.jpg" alt="Step 5 Image" width="100px" height="100px">
+        </section>
 
-            <h2 id="step6">When Finished</h2>
+        <section id="step6"> 
+            <h2 >When Finished</h2>
             <p>After roasting is finished, the cooked duck should be like this.</p>
             <img src="/assets/roast-duck.jpg" alt="Roasted Duck" width="100px" height="100px">
-        </div>
-    </div>
+        </section>
+        <!-- </div>
+    </div> -->
+    </main>
 <!--     
     <header>
         <h1>How to Roast a Duck</h1>
