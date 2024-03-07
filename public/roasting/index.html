@@ -110,6 +110,10 @@
             flex-direction: row;
         }
 
+        .flex-row img {
+            margin-left: 10px;
+        }
+
         img {
             border-radius: 8px;
             width: 150px;
@@ -118,7 +122,7 @@
         }
 
        nav a {
-        font-size: ;
+        font-size: 24px;
        }
 
 
@@ -132,8 +136,13 @@
         <article>
             <!-- <header> -->
             <h1>How to Roast a Duck</h1>
-            <p>This is the description of the steps to roast a duck.</p>
-            <img src="/assets/raw-duck.jpg" alt="Roasted Duck" width="100px" height="100px">
+            <div class="flex-row">
+                
+                        <p>This is the description of the steps to roast a duck.</p>
+                    
+                        <img src="/assets/raw-duck.jpg" alt="Roasted Duck">
+                    
+            </div>
             <nav>
                 <ol>
                     <li><a href="#Gather-Your-Ingredients">Gather Your Ingredients</a></li>
@@ -155,7 +164,7 @@
                                 <li>2 teaspoons paprika</li>
                             </ul>
                         </td>
-                        <td><img src="/assets/paprika.png" width="50px" height="50px"></td>
+                        <td><img src="/assets/paprika.png"></td>
                     </tr>
                     <tr>
                         <td>
@@ -173,9 +182,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <td>
+                            <ul>
                                 <li>1 (5 pound) whole duck</li>
-                            </td>
+                            </ul>
                             
                         </td>
                     </tr>
@@ -188,7 +197,7 @@
                         </td>
 
                     </tr>
-                </ul>
+                
                 </table>
                 </div> 
                 <!-- <div class="flex-grow">
@@ -239,7 +248,7 @@
                 <h2 id="When-Finished">When Finished</h2>
                 <div class="flex-grow">
                     <p>After roasting is finished, the cooked duck should be like this.</p>
-                    <img src="/assets/roast-duck.jpg" alt="Roasted Duck" width="100px" height="100px">
+                    <img src="/assets/roast-duck.jpg" alt="Roasted Duck">
                 </div>
             </section>
             <footer>
