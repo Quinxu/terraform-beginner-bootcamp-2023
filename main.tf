@@ -60,7 +60,7 @@ DESCRIPTION
   domain_name = module.home_carving_hosting.domain_name
   # domain_name = "3fdq3gzxq1.cloudfront.net"
   # town = "gamers-grotto"
-  town = "missingo"
+  town = "cooker-cove"
   content_version = var.carving.content_version
 }
 
@@ -80,6 +80,6 @@ DESCRIPTION
   domain_name = module.home_roasting_hosting.domain_name
   # domain_name = "3fdq3gzxq1.cloudfront.net"
   # town = "gamers-grotto"
-  town = "missingo"
+  town = "cooker-cove"
   content_version = var.roasting.content_version
 }
